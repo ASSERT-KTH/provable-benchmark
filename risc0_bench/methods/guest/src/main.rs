@@ -1,13 +1,15 @@
 use risc0_zkvm::guest::env;
-use std::hint::black_box; //Part of rust std lib that stops the compiler from optimizing away certain things,
+//use std::hint::black_box; //Part of rust std lib that stops the compiler from optimizing away certain things,
                           //potentially ruining benchmarks
+use nalgebra::Matrix2;
 
 fn main() {
 
     // read the input
     let input: u32 = env::read();
 
-    let result = black_box(fibonacci(black_box(input)));
+    //let result = black_box(fibonacci(black_box(input)));
+    let result = fibonacci2(input);
     // write public output to the journal
     env::commit(&result);
 }
@@ -25,3 +27,6 @@ fn fibonacci(n: u32) -> u32 {
 }
 
 
+fn fibonacci2(n: u32) -> u64 {
+    Matrix2::new(1, 1, 1, 0).pow(n - 1)[(0, 0)]
+}

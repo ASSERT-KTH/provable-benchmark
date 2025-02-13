@@ -3,14 +3,14 @@
 use methods::{
     GUEST_BENCH_ELF, GUEST_BENCH_ID
 };
-use risc0_zkvm::{default_prover, get_prover_server, ExecutorEnv, ExecutorImpl, Session, VerifierContext, ProverOpts};
+use risc0_zkvm::{get_prover_server, ExecutorEnv, ExecutorImpl, VerifierContext, ProverOpts};
 
 use std::{
     //path::Path,
-    time::{Duration, Instant}, //For timekeeping
+    time::Instant, //For timekeeping
 };
 
-use human_repr::{HumanCount, HumanDuration, HumanThroughput}; // Crate for human representations of durations and bytesizes
+use human_repr::HumanDuration; // Crate for human representations of durations and bytesizes
 
 fn main() {
     // Initialize tracing. In order to view logs, run `RUST_LOG=info cargo run`
@@ -31,7 +31,7 @@ fn main() {
     // ExecutorEnvBuilder::build().
 
     // For example:
-    let input: u32 = 10;
+    let input: u32 = 100000;
     let env = ExecutorEnv::builder()
         .write(&input)
         .unwrap()
@@ -42,11 +42,12 @@ fn main() {
     let start = Instant::now();
     let session = exec.run().unwrap();
     let elapsed = start.elapsed();
+    println!("Executing with input size: {}", input.to_string());
     println!("Execution time: {}", elapsed.human_duration().to_string());
 
 
     // Obtain the default prover.
-    let prover = get_prover_server(&ProverOpts::default()).unwrap();
+    let prover = get_prover_server(&ProverOpts::composite()).unwrap();
     let ctx = VerifierContext::default();
 
     // Proof information by proving the specified ELF binary.

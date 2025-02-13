@@ -31,7 +31,7 @@ fn main() {
     // ExecutorEnvBuilder::build().
 
     // For example:
-    let input: u32 = 15 * u32::pow(2, 27) + 1;
+    let input: u32 = 10;
     let env = ExecutorEnv::builder()
         .write(&input)
         .unwrap()
@@ -42,7 +42,7 @@ fn main() {
     let start = Instant::now();
     let session = exec.run().unwrap();
     let elapsed = start.elapsed();
-    print!("{}", elapsed.human_duration().to_string());
+    println!("Execution time: {}", elapsed.human_duration().to_string());
 
 
     // Obtain the default prover.
@@ -57,7 +57,7 @@ fn main() {
         .unwrap()
         .receipt;
     let proof_duration = prove_start.elapsed();
-    print!("{}", proof_duration.human_duration().to_string());
+    println!("Proving time: {}", proof_duration.human_duration().to_string());
 
     // extract the receipt.
     //let receipt = prove_info.receipt;
@@ -74,5 +74,5 @@ fn main() {
         .verify(GUEST_BENCH_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
-    print!("{}", verify_duration.human_duration().to_string());
+    println!("Verification time: {}", verify_duration.human_duration().to_string());
 }

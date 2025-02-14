@@ -5,7 +5,7 @@ use methods::{
 };
 use risc0_zkvm::{get_prover_server, ExecutorEnv, ExecutorImpl, VerifierContext, ProverOpts, Session};
 use serde::Serialize;
-use serde_with::{serde_as, DurationMilliSeconds};
+use serde_with::{serde_as, DurationMicroSeconds};
 
 use std::{
     //path::Path,
@@ -19,11 +19,11 @@ use csv::Writer;
 #[serde_as]
 #[derive(Serialize)]
 struct Records {
-    #[serde_as(as = "DurationMilliSeconds")]
+    #[serde_as(as = "DurationMicroSeconds")]
     exec_duration: Duration,
-    #[serde_as(as = "DurationMilliSeconds")]
+    #[serde_as(as = "DurationMicroSeconds")]
     prove_duration: Duration,
-    #[serde_as(as = "DurationMilliSeconds")]
+    #[serde_as(as = "DurationMicroSeconds")]
     verify_duration: Duration
 }
 

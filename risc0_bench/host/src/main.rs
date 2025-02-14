@@ -46,7 +46,7 @@ fn main() {
 
 
     // For example:
-    let input: u32 = 1000000000;
+    let input: u32 = 1000;
     let env = ExecutorEnv::builder()
         .write(&input)
         .unwrap()

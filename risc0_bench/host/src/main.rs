@@ -25,8 +25,8 @@ struct RuntimeArgs {
     guest_input: usize,
     #[arg(long)]
     prover_options: String,
-    #[arg(long)]
-    bench_program: String    
+    //#[arg(long)]
+    //bench_program: String    
 }
 
 #[serde_as]
@@ -38,7 +38,8 @@ struct Records {
     prove_duration: Duration,
     #[serde_as(as = "DurationMilliSeconds")]
     verify_duration: Duration,
-    proof_size: usize
+    proof_size: usize,
+    cycle_count: u64
 }
 
 impl Records{
@@ -47,7 +48,8 @@ impl Records{
             exec_duration: Duration::default(),
             prove_duration: Duration::default(),
             verify_duration: Duration::default(),
-            proof_size:0
+            proof_size:0,
+            cycle_count:0
         }
     }
 }
@@ -80,6 +82,11 @@ fn main() {
     println!("Executing with input size: {}", input.to_string());
     println!("Execution time: {}", elapsed.human_duration().to_string());
     record.exec_duration = elapsed;
+    let u_cycles = session.user_cycles;
+    let tot_cycles = session.total_cycles;
+    println!("Total Cycles: {}", tot_cycles);
+    println!("User Cycles: {}", u_cycles);
+    record.cycle_count = tot_cycles;
 
 
     // Obtain the prover. Change ProverOpts implementation for different provers.

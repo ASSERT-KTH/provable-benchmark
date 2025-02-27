@@ -7,6 +7,7 @@ use methods::{
 use risc0_zkvm::{get_prover_server, ExecutorEnv, ExecutorImpl, VerifierContext, ProverOpts, Session};
 use serde::Serialize;
 use serde_with::{serde_as, DurationMilliSeconds};
+use clap::{Parser, command};
 
 use std::{
     //path::Path,
@@ -17,6 +18,16 @@ use std::{
 use human_repr::HumanDuration; // Crate for human representations of durations and bytesizes
 
 use csv::Writer;
+
+#[derive(Parser, Clone)]
+struct RuntimeArgs {
+    #[arg(long)]
+    guest_input: usize,
+    #[arg(long)]
+    prover_options: String,
+    #[arg(long)]
+    bench_program: String    
+}
 
 #[serde_as]
 #[derive(Serialize)]
@@ -41,10 +52,12 @@ impl Records{
     }
 }
 
+
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let cmd_input = &args[1];
-    let prover_options = &args[2];
+    let args = RuntimeArgs::parse();
+    //let args: Vec<String> = env::args().collect();
+    //let cmd_input = &args[1];
+    //let prover_options = &args[2];
 
     let mut record = Records::new();
     // Initialize tracing. In order to view logs, run `RUST_LOG=info cargo run`
@@ -53,7 +66,7 @@ fn main() {
         .init();
 
 
-    let input = cmd_input;
+    let input = args.guest_input;
     let env = ExecutorEnv::builder()
         .write(&input)
         .unwrap()
@@ -70,7 +83,7 @@ fn main() {
 
 
     // Obtain the prover. Change ProverOpts implementation for different provers.
-    let prover = match prover_options.as_str() {
+    let prover = match args.prover_options.as_str() {
         "composite" => {
             println!("Using composite prover");
             get_prover_server(&ProverOpts::composite()).unwrap()

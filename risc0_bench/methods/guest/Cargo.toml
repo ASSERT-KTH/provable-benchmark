@@ -6,8 +6,11 @@ edition = "2021"
 [workspace]
 
 [profile.release]
-opt-level = 0
+opt-level = 3
 
 [dependencies]
 risc0-zkvm = { version = "1.2.0", default-features = false, features = ['std'] }
 nalgebra = "0.33.2"
+password-hash = "0.5.0"
+argon2 = "0.5.3"
+rand = "0.9.0"

@@ -90,7 +90,7 @@ fn main() {
         .build()
         .unwrap();
 
-    let mut exec = ExecutorImpl::from_elf(env, GUEST_BENCH_ELF).unwrap();
+    let mut exec = ExecutorImpl::from_elf(env, GCD_ELF).unwrap();
     let start = Instant::now();
     let session = exec.run().unwrap();
     let elapsed = start.elapsed();
@@ -151,7 +151,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GUEST_BENCH_ID)
+        .verify(GCD_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());
@@ -174,7 +174,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GUEST_BENCH_ID)
+        .verify(GCD_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());
@@ -197,7 +197,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GUEST_BENCH_ID)
+        .verify(GCD_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());

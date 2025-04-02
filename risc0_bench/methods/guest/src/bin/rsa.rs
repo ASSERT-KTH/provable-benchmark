@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use risc0_zkvm::guest::env;
 use rsa::{Pkcs1v15Encrypt, RsaPrivateKey, RsaPublicKey};
 fn main() {

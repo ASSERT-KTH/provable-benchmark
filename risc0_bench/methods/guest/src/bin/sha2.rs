@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use risc0_zkvm::guest::env;
 use hex_literal::hex;
 use sha2::{Sha256, Sha512, Digest};

@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use risc0_zkvm::guest::env;
 fn main() {
 }

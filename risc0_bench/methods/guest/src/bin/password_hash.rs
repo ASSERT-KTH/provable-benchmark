@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use risc0_zkvm::guest::env;
 use password_hash::{PasswordHash, PasswordVerifier};
 use argon2::Argon2; 

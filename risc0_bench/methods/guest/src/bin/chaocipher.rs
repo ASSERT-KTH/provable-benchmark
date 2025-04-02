@@ -1,3 +1,4 @@
+#![allow(warnings)]
 use risc0_zkvm::guest::env;
 const LEFT_ALPHABET_CT: &str = "HXUCZVAMDSLKPEFJRIGTWOBNYQ";
 const RIGHT_ALPHABET_PT: &str = "PTLNBQDEOYSFAVZKGJRIHWXUMC";

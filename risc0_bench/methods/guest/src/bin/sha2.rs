@@ -3,6 +3,7 @@ use risc0_zkvm::guest::env;
 use hex_literal::hex;
 use sha2::{Sha256, Sha512, Digest};
 fn main() {
+    sha2_test();
 }
 fn sha2_test() {
     // create a Sha256 object

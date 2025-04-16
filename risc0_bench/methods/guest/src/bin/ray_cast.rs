@@ -32,6 +32,7 @@ struct Polygon {
 }
 
 fn main() {
+    ray_cast();
 }
 
 fn pt_in_polygon(pt: &Point, poly: &Polygon) -> bool {

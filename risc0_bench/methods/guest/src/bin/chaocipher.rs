@@ -6,6 +6,7 @@ const ZENITH: usize = 0;
 const NADIR: usize = 12;
 const SEQUENCE: &str = "WELLDONEISBETTERTHANWELLSAID";
 fn main() {
+    chaocipher();
 }
 fn cipher(letter: &char, left: &String, right: &String) -> (usize, char) {
     let pos = right.find(*letter).unwrap();

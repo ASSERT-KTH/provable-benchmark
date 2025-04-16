@@ -4,6 +4,7 @@ use password_hash::{PasswordHash, PasswordVerifier};
 use argon2::Argon2; 
 
 fn main() {
+    passhash();
 }
 pub fn passhash() {
     // Can be: `$argon2`, `$pbkdf2`, or `$scrypt`

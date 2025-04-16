@@ -17,6 +17,12 @@ use human_repr::HumanDuration; // Crate for human representations of durations a
 
 use csv::Writer;
 
+use rand_core::OsRng;
+
+use rsa::{Pkcs1v15Encrypt, RsaPrivateKey, RsaPublicKey, pkcs8::EncodePrivateKey, pkcs8::EncodePublicKey};
+use p256::{
+    ecdsa::{signature::Signer, Signature, SigningKey, VerifyingKey}, EncodedPoint};
+
 #[derive(Parser, Clone)]
 struct RuntimeArgs {
     #[arg(long)]
@@ -82,7 +88,28 @@ fn main() {
         .init();
 
 
-    let input = 1000;
+    
+
+
+    // RSA key generation
+
+    let mut rng = rand::thread_rng(); // rand@0.8
+    let bits = 2048;
+    let priv_key = RsaPrivateKey::new(&mut rng, bits).expect("failed to generate a key");
+    let pub_key = RsaPublicKey::from(&priv_key); 
+
+    
+
+/*         // Signing
+    let signing_key = SigningKey::random(&mut OsRng); // Serialize with `::to_bytes()`
+    let message = b"Hello, World!";
+    let signature: Signature = signing_key.sign(message);
+    let verifying_key = VerifyingKey::from(&signing_key);
+ */
+    // end
+
+    let input = (priv_key, pub_key);
+
     let env = ExecutorEnv::builder()
         .write(&input)
         .unwrap()
@@ -90,11 +117,11 @@ fn main() {
         .build()
         .unwrap();
 
-    let mut exec = ExecutorImpl::from_elf(env, GCD_ELF).unwrap();
+    let mut exec = ExecutorImpl::from_elf(env, RSA_ELF).unwrap();
     let start = Instant::now();
     let session = exec.run().unwrap();
     let elapsed = start.elapsed();
-    println!("Executing with input size: {}", input.to_string());
+    //println!("Executing with input size: {}", input.to_string());
     println!("Execution time: {}", elapsed.human_duration().to_string());
     record.exec_duration = elapsed;
     let u_cycles = session.user_cycles;
@@ -151,7 +178,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GCD_ID)
+        .verify(RSA_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());
@@ -174,7 +201,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GCD_ID)
+        .verify(RSA_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());
@@ -197,7 +224,7 @@ fn main() {
 
     let verify_start = Instant::now();
     receipt
-        .verify(GCD_ID)
+        .verify(RSA_ID)
         .unwrap();
     let verify_duration = verify_start.elapsed();
     println!("Verification time: {}", verify_duration.human_duration().to_string());

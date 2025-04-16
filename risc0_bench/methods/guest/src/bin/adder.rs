@@ -1,6 +1,9 @@
 #![allow(warnings)]
 use risc0_zkvm::guest::env;
 fn main() {
+    let input: u32 = env::read();
+    let result = adder(input);
+    env::commit(&result);
 }
 
 fn adder(iterations: u32) {

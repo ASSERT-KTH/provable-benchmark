@@ -2,6 +2,7 @@
 use risc0_zkvm::guest::env;
 use std::mem;
 fn main() {
+    fibonacci(0, 1);
 }
 fn fibonacci(mut prev: usize, mut curr: usize) {
     mem::swap(&mut prev, &mut curr);
